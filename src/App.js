@@ -17,7 +17,18 @@ export default function App() {
     setNotes([...notes, content]);
   }
 
-  let currentScreen = <MainScreen createNoteHandler={createNoteHandler} notes={notes}/>;
+  function removeNoteHandler(index){
+    let newNotes = [...notes];
+
+    newNotes.splice(index, 1);
+
+    setNotes(newNotes);
+  }
+
+  let currentScreen = <MainScreen
+    createNoteHandler={createNoteHandler}
+    notes={notes}
+    removeNoteHandler={removeNoteHandler}/>;
 
   if(creatingNote)
     currentScreen = <NoteScreen
