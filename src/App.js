@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 
-import MainScreen from './Screen/MainScreen/MainScreen';
-import CreatingNoteScreen from './Screen/NoteScreen/NoteScreen';
+import MainScreen from './Screens/MainScreen/MainScreen';
+import CreatingNoteScreen from './Screens/NoteScreen/NoteScreen';
 
 export default function App() {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState(["didi", "moco"]);
   const [creatingNote, setCreatingNote] = useState(false);
 
   function createNoteHandler(){
-    setCreatingNote(true);
+    setCreatingNote(!creatingNote);
   }
+
+  let currentScreen = <MainScreen createNoteHandler={createNoteHandler} notes={notes}/>;
+
+  if(creatingNote) currentScreen = <CreatingNoteScreen createNoteHandler={createNoteHandler}/>
 
   return (
     <>
-      <MainScreen createNote={createNoteHandler} notes={notes}/>
+      {currentScreen}
     </>
   );
 }
