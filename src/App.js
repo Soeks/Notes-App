@@ -8,10 +8,10 @@ export default function App() {
   const [notes, setNotes] = useState([]);
   const [creatingNote, setCreatingNote] = useState(false);
 
-  function createNoteHandler(){
-    if(creatingNote)
+  function createNoteHandler() {
+    if (creatingNote)
       notes.map(note => {
-        if(note.settings == true)
+        if (note.settings == true)
           note.settings = false;
       });
 
@@ -20,37 +20,37 @@ export default function App() {
     setCreatingNote(nextStatus);
   }
 
-  function addNoteHandler(content){
-    if(typeof(content) !== 'string') return;
+  function addNoteHandler(content) {
+    if (typeof (content) !== 'string') return;
 
     let editting = false;
 
     notes.map(note => {
-      if(note.editting)
+      if (note.editting)
         editting = true;
     });
 
-    if(editting){
+    if (editting) {
       let newNotes = [];
 
-      for(var i = 0; i < notes.length; i++){
+      for (var i = 0; i < notes.length; i++) {
         const note = createNote(notes[i].content);
 
-        if(notes[i].editting)
+        if (notes[i].editting)
           note.content = content;
 
         newNotes.push(note);
       }
 
       setNotes(newNotes);
-    }else{
+    } else {
       const note = createNote(content);
 
       setNotes([...notes, note]);
     }
   }
 
-  function deleteNoteHandler(index){
+  function deleteNoteHandler(index) {
     let newNotes = [...notes];
 
     newNotes.splice(index, 1);
@@ -58,13 +58,13 @@ export default function App() {
     setNotes(newNotes);
   }
 
-  function noteSettingsHandler(index){
+  function noteSettingsHandler(index) {
     let newNotes = [];
 
-    for(var i = 0; i < notes.length; i++){
+    for (var i = 0; i < notes.length; i++) {
       const note = createNote(notes[i].content);
 
-      if(i == index)
+      if (i == index)
         note.settings = !notes[i].settings;
 
       newNotes.push(note);
@@ -73,13 +73,13 @@ export default function App() {
     setNotes(newNotes);
   }
 
-  function editNoteHandler(index){
+  function editNoteHandler(index) {
     let newNotes = [];
 
-    for(var i = 0; i < notes.length; i++){
+    for (var i = 0; i < notes.length; i++) {
       const note = createNote(notes[i].content);
 
-      if(i == index)
+      if (i == index)
         note.editting = true;
 
       newNotes.push(note);
@@ -89,7 +89,7 @@ export default function App() {
     createNoteHandler();
   }
 
-  function createNote(content = '', settings = false, editting = false){
+  function createNote(content = '', settings = false, editting = false) {
     const note = {
       content: content,
       settings: settings,
@@ -99,22 +99,18 @@ export default function App() {
     return note;
   }
 
-  let currentScreen = <MainScreen
+  let screen = <MainScreen
     createNoteHandler={createNoteHandler}
     notes={notes}
     noteSettingsHandler={noteSettingsHandler}
     deleteNoteHandler={deleteNoteHandler}
-    editNoteHandler={editNoteHandler}/>;
+    editNoteHandler={editNoteHandler} />;
 
-  if(creatingNote)
-    currentScreen = <NoteScreen
+  if (creatingNote)
+    screen = <NoteScreen
       createNoteHandler={createNoteHandler}
       addNoteHandler={addNoteHandler}
-      notes={notes}/>
+      notes={notes} />
 
-  return (
-    <>
-      <div className={classes.App}>{currentScreen}</div>
-    </>
-  );
+  return <div className={classes.App}>{screen}</div>
 }
