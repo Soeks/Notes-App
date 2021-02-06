@@ -1,23 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+import { NotesContext } from '../../providers/NotesProvider';
 
 import classes from './Note.module.css';
 
-export default function Note(props) {
+export default function Note({ index }) {
+    const { notes, noteSettingsHandler, editNoteHandler, deleteNoteHandler } = useContext(NotesContext);
+
     let note = (
-        <div className={classes.NoteContainer} onClick={() => props.noteSettingsHandler(props.index)}>
-            <p className={classes.Text}>{props.content}</p>
-        </div>
+        <li className={classes.NoteContainer} onClick={() => noteSettingsHandler(index)}>
+            <p className={classes.Text}>{notes[index].text}</p>
+        </li>
     )
 
-    if(props.settings)
+    if (notes[index].settings)
         note = (
-            <div className={classes.NoteContainer} onClick={() => props.noteSettingsHandler(props.index)}>
-                <p className={[classes.Text, classes.Selection].join(' ')}>{props.content}</p>
+            <li className={classes.NoteContainer} onClick={() => noteSettingsHandler(index)}>
+                <p className={[classes.Text, classes.Selection].join(' ')}>{notes[index].text}</p>
                 <div className={classes.ButtonContainer}>
-                    <button className={[classes.Button, classes.Pencil].join(' ')} onClick={() => props.editNoteHandler(props.index)}>✎</button>
-                    <button className={[classes.Button, classes.Thrash].join(' ')} onClick={props.deleteNoteHandler}>🗑</button>
+                    <button className={[classes.Button, classes.Pencil].join(' ')} onClick={() => editNoteHandler(index)}>✎</button>
+                    <button className={[classes.Button, classes.Thrash].join(' ')} onClick={() => deleteNoteHandler(index)}>🗑</button>
                 </div>
-            </div>
+            </li>
         )
 
     return (

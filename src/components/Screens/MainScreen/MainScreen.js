@@ -1,31 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import Note from '../../Note/Note';
-import CreateNoteButton from '../../CustomButton/CustomButton';
+import CustomButton from '../../CustomButton/CustomButton';
+import { NotesContext } from '../../../providers/NotesProvider';
 import classes from './MainScreen.module.css';
 
-export default function MainScreen(props) {
-    const notes = props.notes;
+export default function MainScreen() {
+    const { notes } = useContext(NotesContext);
+    const { screenChangeHandler } = useContext(NotesContext);
 
     return (
         <div className={classes.MainScreen}>
             <ul className={classes.List}>
                 {notes.map(note => {
-                    let index = notes.indexOf(note);
+                    const index = notes.indexOf(note);
 
-                    return (
-                        <li key={index}>
-                            <Note content={note.content}
-                                deleteNoteHandler={() => props.deleteNoteHandler(index)}
-                                noteSettingsHandler={props.noteSettingsHandler}
-                                index={index}
-                                settings={note.settings}
-                                editNoteHandler={props.editNoteHandler}/>
-                        </li>
-                    )
+                    return <Note key={index} index={index} />
                 })}
             </ul>
-            <CreateNoteButton onClick={props.createNoteHandler} text='+'/>
+            <CustomButton onClick={screenChangeHandler} text='+' />
         </div>
     );
 }
