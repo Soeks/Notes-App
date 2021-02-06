@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import MainScreen from './Screens/MainScreen/MainScreen';
-import NoteScreen from './Screens/NoteScreen/NoteScreen';
+import MainScreen from './components/Screens/MainScreen/MainScreen';
+import NoteScreen from './components/Screens/NoteScreen/NoteScreen';
 import classes from './App.module.css';
 
 export default function App() {
