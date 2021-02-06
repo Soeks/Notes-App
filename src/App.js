@@ -7,13 +7,20 @@ export default function App() {
   const [notes, setNotes] = useState([]);
   const [creatingNote, setCreatingNote] = useState(false);
 
-  function createNoteHandler(){
-    notes.map(note => {
-      if(note.settings == true)
-        note.settings = false;
-    });
+  useEffect(() => {
+    console.log("mudança nas notes");
+  }, [notes])
 
-    setCreatingNote(!creatingNote);
+  function createNoteHandler(){
+    if(creatingNote)
+      notes.map(note => {
+        if(note.settings == true)
+          note.settings = false;
+      });
+
+    let nextStatus = !creatingNote;
+
+    setCreatingNote(nextStatus);
   }
 
   function addNoteHandler(content){
@@ -30,11 +37,7 @@ export default function App() {
       let newNotes = [];
 
       for(var i = 0; i < notes.length; i++){
-        let note = {
-          content: notes[i].content,
-          settings: false,
-          editting: false
-        }
+        const note = createNote(notes[i].content);
 
         if(notes[i].editting)
           note.content = content;
@@ -44,11 +47,7 @@ export default function App() {
 
       setNotes(newNotes);
     }else{
-      const note = {
-        content: content,
-        settings: false,
-        editting: false
-      }
+      const note = createNote(content);
 
       setNotes([...notes, note]);
     }
@@ -66,11 +65,7 @@ export default function App() {
     let newNotes = [];
 
     for(var i = 0; i < notes.length; i++){
-      let note = {
-        content: notes[i].content,
-        settings: false,
-        editting: false
-      }
+      const note = createNote(notes[i].content);
 
       if(i == index)
         note.settings = !notes[i].settings;
@@ -85,11 +80,7 @@ export default function App() {
     let newNotes = [];
 
     for(var i = 0; i < notes.length; i++){
-      let note = {
-        content: notes[i].content,
-        settings: false,
-        editting: false
-      }
+      const note = createNote(notes[i].content);
 
       if(i == index)
         note.editting = true;
@@ -99,6 +90,16 @@ export default function App() {
 
     setNotes(newNotes);
     createNoteHandler();
+  }
+
+  function createNote(content = '', settings = false, editting = false){
+    const note = {
+      content: content,
+      settings: settings,
+      editting: editting
+    }
+
+    return note;
   }
 
   let currentScreen = <MainScreen
