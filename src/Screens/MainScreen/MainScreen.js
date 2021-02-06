@@ -1,13 +1,15 @@
 import React from 'react';
 
 import Note from '../../Note/Note';
+import CreateNoteButton from '../../CreateNoteButton/CreateNoteButton';
+import classes from './MainScreen.module.css';
 
 export default function MainScreen(props) {
     const notes = props.notes;
 
     return (
-        <>
-            <button onClick={props.createNoteHandler}>Create note</button>
+        <div className={classes.MainScreen}>
+            <CreateNoteButton createNoteHandler={props.createNoteHandler}/>
             <ul>
                 {notes.map(note => {
                     let index = notes.indexOf(note);
@@ -24,6 +26,6 @@ export default function MainScreen(props) {
                     )
                 })}
             </ul>
-        </>
+        </div>
     );
 }

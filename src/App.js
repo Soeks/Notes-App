@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import MainScreen from './Screens/MainScreen/MainScreen';
 import NoteScreen from './Screens/NoteScreen/NoteScreen';
+import classes from './App.module.css';
 
 export default function App() {
   const [notes, setNotes] = useState([]);
   const [creatingNote, setCreatingNote] = useState(false);
-
-  useEffect(() => {
-    console.log("mudança nas notes");
-  }, [notes])
 
   function createNoteHandler(){
     if(creatingNote)
@@ -117,7 +114,7 @@ export default function App() {
 
   return (
     <>
-      {currentScreen}
+      <div className={classes.App}>{currentScreen}</div>
     </>
   );
 }
