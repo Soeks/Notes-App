@@ -1,20 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+
+import classes from './Note.module.css';
 
 export default function Note(props) {
-    let settingButtons = null;
+    let note = (
+        <div className={classes.NoteContainer} onClick={() => props.noteSettingsHandler(props.index)}>
+            <p className={classes.Text}>{props.content}</p>
+        </div>
+    )
 
     if(props.settings)
-        settingButtons = (
-            <>
-                <button onClick={() => props.editNoteHandler(props.index)}>Edit Note</button>
-                <button onClick={props.deleteNoteHandler}>Delete Note</button>
-            </>
-        );
+        note = (
+            <div className={classes.NoteContainer} onClick={() => props.noteSettingsHandler(props.index)}>
+                <p className={[classes.Text, classes.Selection].join(' ')}>{props.content}</p>
+                <div className={classes.ButtonContainer}>
+                    <button className={[classes.Button, classes.Pencil].join(' ')} onClick={() => props.editNoteHandler(props.index)}>✎</button>
+                    <button className={[classes.Button, classes.Thrash].join(' ')} onClick={props.deleteNoteHandler}>🗑</button>
+                </div>
+            </div>
+        )
 
     return (
         <>
-            <p onClick={() => props.noteSettingsHandler(props.index)}>{props.content}</p>
-            {settingButtons}
+            {note}
         </>
     );
 }

@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+import CustomButton from '../../CustomButton/CustomButton';
+import classes from './NoteScreen.module.css';
+
 export default function NoteScreen(props){
     const [saveButton, setSaveButton] = useState(false);
     const [noteContent, setNoteContent] = useState('');
@@ -26,16 +29,18 @@ export default function NoteScreen(props){
         props.createNoteHandler();
     }
 
-    let showButton = null;
+    let showSaveButton = null;
 
     if(saveButton)
-        showButton = <button onClick={saveNoteHandler}>Save note</button>;
+        showSaveButton = <CustomButton onClick={saveNoteHandler} text='✓'/>
 
     return(
-    <>
+    <div className={classes.NoteScreen}>
         <input type="text" value={noteContent} onChange={inputTextHandler}/>
-        {showButton}
-        <button onClick={props.createNoteHandler}>Cancel note</button>
-    </>
+        <div className={classes.ButtonsContainer}>
+            {showSaveButton}
+            <CustomButton onClick={props.createNoteHandler} text='✕'/>
+        </div>
+    </div>
     );
 }

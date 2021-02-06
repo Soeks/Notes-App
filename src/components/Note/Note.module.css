@@ -1,0 +1,37 @@
+.NoteContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.25rem 0;
+    flex-wrap: wrap;
+}
+
+.ButtonContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.Button{
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+}
+
+.Pencil{
+    background-color: #ffff6f;
+}
+
+.Thrash{
+    background-color: #fc6b6b;
+    font-weight: bold;
+}
+
+.Text{
+    overflow: auto;
+    flex: 1;
+    border: 1px dashed rgb(150, 150, 150);
+}
+
+.Selection{
+    border: 2px solid rgb(50, 50, 50);
+}
