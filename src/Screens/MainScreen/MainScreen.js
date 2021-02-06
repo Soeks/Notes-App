@@ -14,10 +14,12 @@ export default function MainScreen(props) {
 
                     return (
                         <li key={index}>
-                            <Note
-                                content={note}
-                                removeNoteHandler={() => props.removeNoteHandler(index)}
-                                notes={notes}/>
+                            <Note content={note.content}
+                                deleteNoteHandler={() => props.deleteNoteHandler(index)}
+                                noteSettingsHandler={props.noteSettingsHandler}
+                                index={index}
+                                settings={note.settings}
+                                editNoteHandler={props.editNoteHandler}/>
                         </li>
                     )
                 })}

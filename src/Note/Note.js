@@ -1,30 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
 export default function Note(props) {
-    const [noteSettings, setNoteSettings] = useState(false);
+    let settingButtons = null;
 
-    useEffect(() => {
-        setNoteSettings(false);
-    }, [props.notes])
-
-    function openSettingsHandler(){
-        setNoteSettings(!noteSettings);
-    }
-
-    let settingsButton = null;
-
-    if(noteSettings)
-        settingsButton = (
+    if(props.settings)
+        settingButtons = (
             <>
-                <button>Edit Note</button>
-                <button onClick={props.removeNoteHandler}>Delete Note</button>
+                <button onClick={() => props.editNoteHandler(props.index)}>Edit Note</button>
+                <button onClick={props.deleteNoteHandler}>Delete Note</button>
             </>
         );
 
     return (
         <>
-            <p onClick={openSettingsHandler}>{props.content}</p>
-            {settingsButton}
+            <p onClick={() => props.noteSettingsHandler(props.index)}>{props.content}</p>
+            {settingButtons}
         </>
     );
 }
