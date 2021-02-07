@@ -9,31 +9,27 @@ export default function NotesProvider(props) {
     const [notes, setNotes] = useState([]);
 
     function screenChangeHandler() {
-        notes.map(note => {
-            if (note.settings)
-                note.settings = false;
-        });
+        if(noteScreen)
+            notes.map(note => {
+                resetNoteOptions(note);
+            });
 
         setNoteScreen(!noteScreen);
     }
 
     function createNoteHandler(text) {
-        const newNotes = [...notes];
-        
         let editCheck = false;
 
-        newNotes.map(note => {
+        notes.map(note => {
             if (note.editting) {
                 note.text = text;
-                note.editting = false;
+                resetNoteOptions(note);
                 editCheck = true;
             }
         });
 
-        if (editCheck)
-            setNotes(newNotes);
-        else
-            setNotes([...notes, createNote(text)]);
+        if (!editCheck)
+            notes.push(createNote(text));
 
         screenChangeHandler();
     }
@@ -41,7 +37,7 @@ export default function NotesProvider(props) {
     function noteSettingsHandler(index) {
         const newNotes = [...notes];
 
-        for (var i = 0; i < newNotes.length; i++) {
+        for (let i = 0; i < newNotes.length; i++) {
             if (i == index)
                 newNotes[i].settings = !newNotes[i].settings;
             else
@@ -52,18 +48,15 @@ export default function NotesProvider(props) {
     }
 
     function editNoteHandler(index) {
-        const newNotes = [...notes];
+        notes[index].editting = true;
 
-        newNotes[index].editting = true;
-
-        setNotes(newNotes);
         screenChangeHandler();
     }
 
     function deleteNoteHandler(index) {
         const newNotes = [...notes];
 
-        newNotes.splice(index, 1);
+        newNotes.slice(index, 1);
 
         setNotes(newNotes);
     }
@@ -76,6 +69,11 @@ export default function NotesProvider(props) {
         }
 
         return note;
+    }
+
+    function resetNoteOptions(note){
+        note.settings = false;
+        note.editting = false;
     }
 
     return (
