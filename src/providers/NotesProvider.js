@@ -47,18 +47,18 @@ export default function NotesProvider(props) {
         setNotes(newNotes);
     }
 
+    function deleteNoteHandler(index) {
+        const newNotes = [...notes];
+
+        newNotes.splice(index, 1);
+
+        setNotes(newNotes);
+    }
+
     function editNoteHandler(index) {
         notes[index].editting = true;
 
         screenChangeHandler();
-    }
-
-    function deleteNoteHandler(index) {
-        const newNotes = [...notes];
-
-        newNotes.slice(index, 1);
-
-        setNotes(newNotes);
     }
 
     function createNote(text = '', settings = false, editting = false) {
