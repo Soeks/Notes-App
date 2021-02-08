@@ -33,7 +33,7 @@ export default function NoteScreen() {
 
     return (
         <div className={classes.NoteScreen}>
-            <input type="text" value={noteText} onChange={noteTextHandler} />
+            <textarea className={classes.TextArea} value={noteText} onChange={noteTextHandler} />
             <div className={classes.ButtonsContainer}>
                 {showSaveButton}
                 <CustomButton onClick={screenChangeHandler} text='✕' />

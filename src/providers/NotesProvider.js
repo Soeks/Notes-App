@@ -78,7 +78,8 @@ export default function NotesProvider(props) {
 
     return (
         <NotesContext.Provider value={{
-            notes, setNotes, screenChangeHandler, createNoteHandler, noteSettingsHandler, editNoteHandler, deleteNoteHandler
+            notes, setNotes, screenChangeHandler, createNoteHandler,
+            noteSettingsHandler, editNoteHandler, deleteNoteHandler
         }}>
             {props.children}
         </NotesContext.Provider>

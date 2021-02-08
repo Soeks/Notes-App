@@ -12,11 +12,7 @@ export default function MainScreen() {
     return (
         <div className={classes.MainScreen}>
             <ul className={classes.List}>
-                {notes.map(note => {
-                    const index = notes.indexOf(note);
-
-                    return <Note key={index} index={index} />
-                })}
+                {notes.map((_, id) => <Note key={id} index={id}/>)}
             </ul>
             <CustomButton onClick={screenChangeHandler} text='+' />
         </div>

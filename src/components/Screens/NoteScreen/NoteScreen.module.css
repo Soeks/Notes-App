@@ -11,3 +11,9 @@
     display: flex;
     justify-content: space-evenly;
 }
+
+.TextArea{
+    flex: 1;
+    min-height: 2rem;
+    margin-bottom: 2rem;
+}

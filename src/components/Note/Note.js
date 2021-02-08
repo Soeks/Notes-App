@@ -15,13 +15,13 @@ export default function Note({ index }) {
 
     if (notes[index].settings)
         note = (
-            <li className={classes.NoteContainer}>
+            <div className={classes.NoteContainer}>
                 <p onClick={() => noteSettingsHandler(index)} className={[classes.Text, classes.Selection].join(' ')}>{notes[index].text}</p>
                 <div className={classes.ButtonContainer}>
                     <button className={[classes.Button, classes.Pencil].join(' ')} onClick={() => editNoteHandler(index)}>✎</button>
                     <button className={[classes.Button, classes.Thrash].join(' ')} onClick={() => deleteNoteHandler(index)}>🗑</button>
                 </div>
-            </li>
+            </div>
         )
 
     return (

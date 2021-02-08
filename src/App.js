@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
 import MainScreen from './components/Screens/MainScreen/MainScreen';
 import NoteScreen from './components/Screens/NoteScreen/NoteScreen';

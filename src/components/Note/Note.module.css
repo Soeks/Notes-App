@@ -27,9 +27,8 @@
 }
 
 .Text{
-    overflow: auto;
-    flex: 1;
     border: 1px dashed rgb(150, 150, 150);
+    flex: 1;
 }
 
 .Selection{
