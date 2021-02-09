@@ -5,15 +5,16 @@ import classes from './NoteScreen.module.css';
 import { NotesContext } from '../../../providers/NotesProvider';
 
 export default function NoteScreen() {
-    const { notes, screenChangeHandler, createNoteHandler } = useContext(NotesContext);
+    const { notes, cancelNoteHandler, createNoteHandler } = useContext(NotesContext);
     const [noteText, setNoteText] = useState('');
     const [saveButton, setSaveButton] = useState(false);
 
     useEffect(() => {
-        notes.map(note => {
-            if (note.editting)
-                setNoteText(note.text);
-        })
+        if(notes.length > 0)
+            notes.map(note => {
+                if (note.editting)
+                    setNoteText(note.text);
+            })
     }, [])
 
     function noteTextHandler(content) {
@@ -29,15 +30,15 @@ export default function NoteScreen() {
     let showSaveButton = null;
 
     if (saveButton)
-        showSaveButton = <CustomButton onClick={() => createNoteHandler(noteText)} text='✓' />
+        showSaveButton = <CustomButton onClick={() => createNoteHandler(noteText)} text='Save Note' />
 
     return (
         <div className={classes.NoteScreen}>
             <textarea className={classes.TextArea} value={noteText} onChange={noteTextHandler} />
             <div className={classes.ButtonsContainer}>
                 {showSaveButton}
-                <CustomButton onClick={screenChangeHandler} text='✕' />
+                <CustomButton onClick={cancelNoteHandler} text='Cancel Note' />
             </div>
         </div>
-    );
+    )
 }

@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, createContext, useContext, useEffect } from 'react';
 
 import { ScreenContext } from './ScreenProvider';
 
@@ -8,28 +8,58 @@ export default function NotesProvider(props) {
     const { noteScreen, setNoteScreen } = useContext(ScreenContext);
     const [notes, setNotes] = useState([]);
 
-    function screenChangeHandler() {
-        if(noteScreen)
-            notes.map(note => {
-                resetNoteOptions(note);
-            });
+    useEffect(function(){
+        const storagedNotes = JSON.parse(localStorage.getItem('notes'));
 
+        if(storagedNotes.length > 0)
+            storagedNotes.map(function(note){
+                note.settings = false;
+                note.editting = false;
+            })
+
+        setNotes(storagedNotes);
+    }, [])
+
+    useEffect(function(){
+        localStorage.setItem('notes', JSON.stringify(notes))
+    }, [notes])
+
+    function screenChangeHandler() {
         setNoteScreen(!noteScreen);
     }
 
+    function cancelNoteHandler(){
+        const newNotes = [...notes];
+
+        newNotes.map(function(note){
+            note.editting = false;
+        })
+
+        localStorage.setItem('noteText', '');
+
+        setNotes(newNotes);
+
+        screenChangeHandler();
+    }
+
     function createNoteHandler(text) {
+        const newNotes = [...notes];
         let editCheck = false;
 
-        notes.map(note => {
-            if (note.editting) {
+        newNotes.map(function(note){
+            if(note.editting){
                 note.text = text;
-                resetNoteOptions(note);
+                note.editting = false;
                 editCheck = true;
             }
-        });
+        })
 
-        if (!editCheck)
-            notes.push(createNote(text));
+        if(!editCheck)
+            newNotes.push(createNote(text));
+
+        localStorage.setItem('noteText', '');
+
+        setNotes(newNotes);
 
         screenChangeHandler();
     }
@@ -56,7 +86,11 @@ export default function NotesProvider(props) {
     }
 
     function editNoteHandler(index) {
-        notes[index].editting = true;
+        const newNotes = [...notes];
+
+        newNotes[index].editting = true;
+
+        setNotes(newNotes);
 
         screenChangeHandler();
     }
@@ -71,17 +105,12 @@ export default function NotesProvider(props) {
         return note;
     }
 
-    function resetNoteOptions(note){
-        note.settings = false;
-        note.editting = false;
-    }
-
     return (
         <NotesContext.Provider value={{
             notes, setNotes, screenChangeHandler, createNoteHandler,
-            noteSettingsHandler, editNoteHandler, deleteNoteHandler
+            noteSettingsHandler, editNoteHandler, deleteNoteHandler, cancelNoteHandler
         }}>
             {props.children}
         </NotesContext.Provider>
-    );
+    )
 }
