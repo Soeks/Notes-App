@@ -17,7 +17,8 @@ export default function App() {
   return (
     <div className={classes.App}>
       <NotesProvider>
-        {currentScreen}
+        <header></header>
+        <body>{currentScreen}</body>
       </NotesProvider>
     </div>
   )
