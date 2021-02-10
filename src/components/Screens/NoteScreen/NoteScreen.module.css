@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     width: 80%;
-    height: 100%;
+    height: 90vh;
     margin: auto;
     padding: 2rem;
 }
@@ -11,14 +11,30 @@
 .ButtonsContainer{
     display: flex;
     justify-content: space-evenly;
-    width: 50%;
+    width: 700px;
 }
 
 .TextArea{
-    width: 50%;
+    width: 700px;
     height: 100%;
     border: 2px solid black;
     overflow: auto;
     margin-bottom: 2rem;
     background-color: rgb(255, 240, 240);
+}
+
+
+@media(max-width: 1000px){
+    .TextArea{
+        width: 90%;
+    }
+    .ButtonsContainer{
+        width: 90%;
+    }
+}
+
+@media(max-width: 500px){
+    .ButtonsContainer > button {
+        font-size: 1rem;
+    }
 }
