@@ -9,7 +9,10 @@ export default function NotesProvider(props) {
     const [notes, setNotes] = useState([]);
 
     useEffect(function(){
-        const storagedNotes = JSON.parse(localStorage.getItem('notes'));
+        let storagedNotes = JSON.parse(localStorage.getItem('notes'));
+
+        if(storagedNotes === null)
+            return;
 
         if(storagedNotes.length > 0)
             storagedNotes.map(function(note){
