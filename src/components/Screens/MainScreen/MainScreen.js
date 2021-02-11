@@ -4,7 +4,7 @@ import Note from '../../Note/Note';
 import CustomButton from '../../CustomButton/CustomButton';
 import { NotesContext } from '../../../providers/NotesProvider';
 import classes from './MainScreen.module.css';
-
+//test
 export default function MainScreen() {
     const { notes } = useContext(NotesContext);
     const { screenChangeHandler } = useContext(NotesContext);
