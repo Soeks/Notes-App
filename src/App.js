@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 
-import MainScreen from "./components/Screens/MainScreen";
-import NoteScreen from "./components/Screens/NoteScreen";
-import NotesProvider from "./providers/NotesProvider";
-import { ScreenContext } from "./providers/ScreenProvider";
+import MainScreen from './components/Screens/MainScreen';
+import NoteScreen from './components/Screens/NoteScreen';
+import NotesProvider from './providers/NotesProvider';
+import { ScreenContext } from './providers/ScreenProvider';
 
-import { AppStyle, Header } from "./styles";
+import { AppStyle } from './styles';
 
 export default function App() {
   const { noteScreen } = useContext(ScreenContext);
@@ -13,9 +13,9 @@ export default function App() {
   return (
     <AppStyle>
       <NotesProvider>
-        <Header>
+        <header>
           <h1>Notes App</h1>
-        </Header>
+        </header>
         {noteScreen ? <NoteScreen /> : <MainScreen />}
       </NotesProvider>
     </AppStyle>

@@ -2,7 +2,13 @@ import React, { useContext } from 'react';
 
 import { NotesContext } from '../providers/NotesProvider';
 
-import { NoteStyle, Selection, Pencil, Thrash } from '../styles';
+import {
+  NoteStyle,
+  NoteText,
+  NoteTextSelected,
+  NoteEditButton,
+  NoteDeleteButton,
+} from '../styles';
 
 export default function Note({ index }) {
   const {
@@ -16,16 +22,22 @@ export default function Note({ index }) {
     <NoteStyle>
       {notes[index].settings ? (
         <>
-          <Selection onClick={() => noteSettingsHandler(index)}>
+          <NoteTextSelected onClick={() => noteSettingsHandler(index)}>
             {notes[index].text}
-          </Selection>
+          </NoteTextSelected>
           <div>
-            <Pencil onClick={() => editNoteHandler(index)}>Edit</Pencil>
-            <Thrash onClick={() => deleteNoteHandler(index)}>Delete</Thrash>
+            <NoteEditButton onClick={() => editNoteHandler(index)}>
+              Edit
+            </NoteEditButton>
+            <NoteDeleteButton onClick={() => deleteNoteHandler(index)}>
+              Delete
+            </NoteDeleteButton>
           </div>
         </>
       ) : (
-        <p onClick={() => noteSettingsHandler(index)}>{notes[index].text}</p>
+        <NoteText onClick={() => noteSettingsHandler(index)}>
+          {notes[index].text}
+        </NoteText>
       )}
     </NoteStyle>
   );
