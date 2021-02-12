@@ -59,6 +59,7 @@ export const NoteScreenStyle = styled.main`
     overflow: auto;
     margin-bottom: 2rem;
     background-color: rgb(255, 240, 240);
+    font-size: 1.2rem;
   }
 
   div {
