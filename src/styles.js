@@ -2,9 +2,6 @@ import styled from 'styled-components';
 
 export const AppStyle = styled.div`
   width: 100vw;
-  min-height: 100vh;
-  height: max-content;
-  background-color: rgb(232, 242, 255);
 
   header {
     height: 10vh;
@@ -15,89 +12,90 @@ export const AppStyle = styled.div`
 
     h1 {
       font-size: 3rem;
-      color: rgb(255, 255, 255);
+      color: white;
     }
+  }
+
+  main {
+    height: 90vh;
   }
 `;
 
-export const MainScreenStyle = styled.main`
+export const NoteCreationStyle = styled.div`
+  padding: 4rem 2rem 2rem 2rem;
+  height: fit-content;
+
+  textarea {
+    display: block;
+    margin: auto;
+    resize: none;
+    font-size: 1.2rem;
+    width: 80%;
+    height: 500px;
+    margin-bottom: 2rem;
+    background-color: rgb(255, 240, 240);
+  }
+
+  div {
+    width: fit-content;
+    margin: auto;
+  }
+
+  div > button {
+    margin: 0 1.5rem;
+  }
+
+  > button {
+    display: block;
+    margin: auto;
+  }
+`;
+
+export const NoteListStyle = styled.div`
   width: 100%;
-  height: 100%;
-  padding: 0 0 2rem 0;
-  display: flex;
-  flex-direction: column;
+  padding: 2rem 2rem 0 2rem;
 
   ul {
     display: flex;
     flex-wrap: wrap;
     overflow: auto;
-    margin-bottom: 2rem;
     justify-content: center;
     list-style-type: none;
   }
 
   > p {
     font-size: 2.5rem;
-    margin: 3rem;
     text-align: center;
+    margin-bottom: 2rem;
   }
 `;
 
-export const NoteScreenStyle = styled.main`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80%;
+export const BlockScreenStyle = styled.div`
+  background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  top: 10vh;
+  width: 100%;
   height: 90vh;
-  margin: auto;
-  padding: 2rem;
-
-  textarea {
-    width: 700px;
-    height: 100%;
-    border: 2px solid black;
-    overflow: auto;
-    margin-bottom: 2rem;
-    background-color: rgb(255, 240, 240);
-    font-size: 1.2rem;
-  }
-
-  div {
-    display: flex;
-    justify-content: space-evenly;
-    width: 700px;
-  }
-
-  @media (max-width: 1000px) {
-    textarea {
-      width: 90%;
-    }
-    div {
-      width: 90%;
-    }
-  }
-
-  @media (max-width: 500px) {
-    div > button {
-      font-size: 1rem;
-    }
-  }
+  z-index: 1;
 `;
 
 export const CustomButtonStyle = styled.button`
   font-weight: bold;
   padding: 0.25rem 0.5rem;
   font-size: 1.5rem;
-  align-self: center;
-  border: 0.15rem solid black;
-  border-radius: 5rem;
+  border: 0.125rem solid rgb(50, 50, 50);
+  border-radius: 0.1rem;
 `;
 
 export const NoteStyle = styled.li`
-  margin: 2rem 2rem 0 2rem;
+  margin: 0rem 2rem 2rem 2rem;
+  position: relative;
 
   div {
     display: flex;
+    width: 100%;
+    position: absolute;
+    bottom: calc(-height);
   }
 `;
 
@@ -105,6 +103,9 @@ export const NoteSettingsButton = styled.button`
   flex: 1;
   font-size: 1rem;
   font-weight: bold;
+  border-width: 0 2px 2px 2px;
+  border-color: rgb(50, 50, 50);
+  border-style: solid;
 `;
 
 export const NoteEditButton = styled(NoteSettingsButton)`
@@ -113,6 +114,7 @@ export const NoteEditButton = styled(NoteSettingsButton)`
 
 export const NoteDeleteButton = styled(NoteSettingsButton)`
   background-color: #ff7b7b;
+  border-width: 0 2px 2px 0;
 `;
 
 export const NoteText = styled.p`

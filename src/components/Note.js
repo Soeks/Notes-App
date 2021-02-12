@@ -11,12 +11,37 @@ import {
 } from '../styles';
 
 export default function Note({ index }) {
-  const {
-    notes,
-    noteSettingsHandler,
-    editNoteHandler,
-    deleteNoteHandler,
-  } = useContext(NotesContext);
+  const { notes, setNotes } = useContext(NotesContext);
+
+  function noteSettingsHandler(index) {
+    const newNotes = [...notes];
+
+    for (let i = 0; i < newNotes.length; i++) {
+      if (i == index) newNotes[i].settings = !newNotes[i].settings;
+      else newNotes[i].settings = false;
+    }
+
+    setNotes(newNotes);
+  }
+
+  function deleteNoteHandler(index) {
+    const newNotes = [...notes];
+
+    newNotes.splice(index, 1);
+
+    setNotes(newNotes);
+  }
+
+  function editNoteHandler(index) {
+    const newNotes = [...notes];
+
+    for (let i = 0; i < newNotes.length; i++) {
+      if (i == index) newNotes[i].editting = !newNotes[i].editting;
+      else newNotes[i].editting = false;
+    }
+
+    setNotes(newNotes);
+  }
 
   return (
     <NoteStyle>

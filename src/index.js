@@ -3,13 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-import ScreenProvider from './providers/ScreenProvider';
-
 ReactDOM.render(
   <React.StrictMode>
-    <ScreenProvider>
-      <App />
-    </ScreenProvider>
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

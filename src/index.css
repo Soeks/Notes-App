@@ -4,3 +4,7 @@
   font-family: 'Roboto';
   box-sizing: border-box;
 }
+
+html {
+  background-color: rgb(232, 242, 255);
+}
