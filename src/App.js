@@ -3,6 +3,7 @@ import React from 'react';
 import NoteList from './components/NoteList';
 import NoteCreation from './components/NoteCreation';
 import NotesProvider from './providers/NotesProvider';
+import BlockScreen from './components/BlockScreen';
 
 import { AppStyle } from './styles';
 
@@ -15,6 +16,7 @@ export default function App() {
         </header>
         <main>
           <NoteCreation />
+          <BlockScreen />
           <NoteList />
         </main>
       </NotesProvider>

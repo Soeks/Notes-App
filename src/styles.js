@@ -9,6 +9,8 @@ export const AppStyle = styled.div`
     justify-content: center;
     align-items: center;
     background-color: rgb(100, 100, 100);
+    position: relative;
+    z-index: 2;
 
     h1 {
       font-size: 3rem;
@@ -22,27 +24,32 @@ export const AppStyle = styled.div`
 `;
 
 export const NoteCreationStyle = styled.div`
-  padding: 4rem 2rem 2rem 2rem;
+  margin: 1rem auto;
+  padding: 0;
   height: fit-content;
+  position: relative;
+  z-index: 2;
+  width: 80%;
+  background-color: rgb(200, 200, 200);
+  padding: 1rem;
+  border-radius: 0.5rem;
 
   textarea {
-    display: block;
-    margin: auto;
     resize: none;
+    width: 100%;
+    height: 250px;
+    margin-bottom: 1rem;
     font-size: 1.2rem;
-    width: 80%;
-    height: 500px;
-    margin-bottom: 2rem;
     background-color: rgb(255, 240, 240);
   }
 
   div {
-    width: fit-content;
-    margin: auto;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
   }
 
   div > button {
-    margin: 0 1.5rem;
   }
 
   > button {
@@ -72,10 +79,10 @@ export const NoteListStyle = styled.div`
 
 export const BlockScreenStyle = styled.div`
   background-color: rgba(0, 0, 0, 0.4);
-  position: absolute;
-  top: 10vh;
+  position: fixed;
+  top: 0;
   width: 100%;
-  height: 90vh;
+  height: 100vh;
   z-index: 1;
 `;
 
@@ -83,7 +90,7 @@ export const CustomButtonStyle = styled.button`
   font-weight: bold;
   padding: 0.25rem 0.5rem;
   font-size: 1.5rem;
-  border: 0.125rem solid rgb(50, 50, 50);
+  border: 1px solid rgb(50, 50, 50);
   border-radius: 0.1rem;
 `;
 
