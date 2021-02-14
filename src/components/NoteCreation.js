@@ -12,14 +12,32 @@ export default function NoteCreation() {
 
   const [saveButton, setSaveButton] = useState(false);
 
-  useEffect(() => {
-    if (!creatingNote) return;
+  useEffect(
+    function () {
+      if (!creatingNote) return;
 
-    if (notes.length > 0)
-      notes.map((note, index) => {
-        if (note.editting) setCurrentNote({ text: note.text, index: index });
-      });
-  }, [creatingNote, notes]);
+      if (notes.length > 0)
+        notes.map((note, index) => {
+          if (note.editting) setCurrentNote({ text: note.text, index: index });
+        });
+    },
+    [creatingNote]
+  );
+
+  useEffect(
+    function () {
+      if (currentNote.text === '') setSaveButton(false);
+      else if (
+        currentNote.index !== null &&
+        currentNote.text === notes[currentNote.index].text
+      ) {
+        setSaveButton(false);
+      } else {
+        if (!saveButton) setSaveButton(true);
+      }
+    },
+    [currentNote]
+  );
 
   function saveNoteHandler() {
     if (currentNote.index !== null) editNoteHandler();
@@ -40,12 +58,14 @@ export default function NoteCreation() {
     setCreatingNote(false);
   }
 
-  function editNoteHandler(index) {
+  function editNoteHandler() {
     const newNotes = [...notes];
 
-    newNotes[index].text = currentNote.text;
-    newNotes[index].settings = false;
-    newNotes[index].editting = false;
+    console.log(currentNote.index);
+
+    newNotes[currentNote.index].text = currentNote.text;
+    newNotes[currentNote.index].settings = false;
+    newNotes[currentNote.index].editting = false;
 
     setCurrentNote({ text: '', index: null });
     setNotes(newNotes);
@@ -72,15 +92,6 @@ export default function NoteCreation() {
 
   function textChangeHandler(content) {
     setCurrentNote({ text: content.target.value, index: currentNote.index });
-
-    if (
-      content.target.value === '' ||
-      content.target.value === currentNote.text
-    )
-      setSaveButton(false);
-    else {
-      if (!saveButton) setSaveButton(true);
-    }
   }
 
   return (

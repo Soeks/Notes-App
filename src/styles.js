@@ -150,7 +150,7 @@ export const NoteListStyle = styled.div`
 `;
 
 export const NoteText = styled.p`
-  border: 1px dashed ${theme.primaryColor.border};
+  border: 1px solid ${theme.primaryColor.border};
   padding: 0.1rem 0.2rem;
   word-wrap: break-word;
   overflow: hidden;
