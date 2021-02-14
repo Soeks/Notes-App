@@ -1,96 +1,104 @@
 import React, { useEffect, useState, useContext } from 'react';
 
-import CustomButton from './CustomButton';
 import { NotesContext } from '../providers/NotesProvider';
 
-import { NoteCreationStyle } from '../styles';
+import { NoteCreationStyle, Button, CreateButton } from '../styles';
 
 export default function NoteCreation() {
-  const { notes, setNotes } = useContext(NotesContext);
-  const [noteText, setNoteText] = useState('');
-  const [creatingNote, setCreatingNote] = useState(false);
+  const { notes, setNotes, creatingNote, setCreatingNote } = useContext(
+    NotesContext
+  );
+  const [currentNote, setCurrentNote] = useState({ text: '', index: null });
+
   const [saveButton, setSaveButton] = useState(false);
 
   useEffect(() => {
     if (!creatingNote) return;
 
     if (notes.length > 0)
-      notes.map((note) => {
-        if (note.editting) setNoteText(note.text);
+      notes.map((note, index) => {
+        if (note.editting) setCurrentNote({ text: note.text, index: index });
       });
-  }, [notes]);
+  }, [creatingNote, notes]);
 
-  function noteTextHandler(content) {
-    setNoteText(content.target.value);
-
-    if (content.target.value === '') setSaveButton(false);
-    else if (!saveButton) setSaveButton(true);
+  function saveNoteHandler() {
+    if (currentNote.index !== null) editNoteHandler();
+    else addNoteHandler();
   }
 
-  function createNoteHandler(value) {
-    if (!value) {
-      setNoteText('');
-    }
-
-    setCreatingNote(value);
-  }
-
-  function saveNoteHandler(text) {
-    if (text === '') return;
-
+  function addNoteHandler() {
     const newNotes = [...notes];
-    let editCheck = false;
 
-    newNotes.map(function (note) {
-      if (note.editting) {
-        note.text = text;
-        note.editting = false;
-        editCheck = true;
-      }
+    newNotes.push({
+      text: currentNote.text,
+      settings: false,
+      editting: false,
     });
 
-    if (!editCheck) newNotes.push(createNote(text));
-
-    setNoteText('');
-    setCreatingNote(false);
-
+    setCurrentNote({ text: '', index: null });
     setNotes(newNotes);
+    setCreatingNote(false);
   }
 
-  function createNote(text = '', settings = false, editting = false) {
-    const note = {
-      text: text,
-      settings: settings,
-      editting: editting,
-    };
+  function editNoteHandler(index) {
+    const newNotes = [...notes];
 
-    return note;
+    newNotes[index].text = currentNote.text;
+    newNotes[index].settings = false;
+    newNotes[index].editting = false;
+
+    setCurrentNote({ text: '', index: null });
+    setNotes(newNotes);
+    setCreatingNote(false);
+  }
+
+  function createNoteHandler() {
+    setCreatingNote(true);
+  }
+
+  function cancelNoteHandler() {
+    if (currentNote.index !== null) {
+      const newNotes = [...notes];
+
+      newNotes[currentNote.index].settings = false;
+      newNotes[currentNote.index].editting = false;
+
+      setNotes(newNotes);
+    }
+
+    setCreatingNote(false);
+  }
+
+  function textChangeHandler(content) {
+    setCurrentNote({ text: content.target.value, index: currentNote.index });
+
+    if (
+      content.target.value === '' ||
+      content.target.value === currentNote.text
+    )
+      setSaveButton(false);
+    else {
+      if (!saveButton) setSaveButton(true);
+    }
   }
 
   return (
-    <NoteCreationStyle>
+    <>
       {creatingNote ? (
-        <>
-          <textarea value={noteText} onChange={noteTextHandler} />
+        <NoteCreationStyle creatingNote={creatingNote}>
+          <textarea value={currentNote.text} onChange={textChangeHandler} />
           <div>
             {saveButton ? (
-              <CustomButton
-                onClick={() => saveNoteHandler(noteText)}
-                text='Save Note'
-              />
+              <Button onClick={saveNoteHandler}>Save Note</Button>
             ) : null}
-            <CustomButton
-              onClick={() => createNoteHandler(false)}
-              text='Cancel Note'
-            />
+            <Button onClick={cancelNoteHandler}>Cancel Note</Button>
           </div>
-        </>
+        </NoteCreationStyle>
       ) : (
-        <CustomButton
-          onClick={() => createNoteHandler(true)}
-          text='Create Note'
-        />
+        <CreateButton creatingNote={creatingNote} onClick={createNoteHandler}>
+          Create Note
+        </CreateButton>
       )}
-    </NoteCreationStyle>
+    </>
   );
 }

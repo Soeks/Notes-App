@@ -4,6 +4,7 @@ export const NotesContext = createContext();
 
 export default function NotesProvider(props) {
   const [notes, setNotes] = useState([]);
+  const [creatingNote, setCreatingNote] = useState(false);
 
   useEffect(function () {
     let storagedNotes = JSON.parse(localStorage.getItem('notes'));
@@ -28,10 +29,7 @@ export default function NotesProvider(props) {
 
   return (
     <NotesContext.Provider
-      value={{
-        notes,
-        setNotes,
-      }}
+      value={{ notes, setNotes, creatingNote, setCreatingNote }}
     >
       {props.children}
     </NotesContext.Provider>

@@ -1,66 +1,123 @@
-import styled from 'styled-components';
+import styled, { keyframes, css, createGlobalStyle } from 'styled-components';
 
-export const AppStyle = styled.div`
-  width: 100vw;
+const theme = {
+  primaryColor: {
+    header: 'white',
+    headerBackground: '#3e3e3e',
+    text: '#3c372b',
+    border: '#3c372b',
+    boxShadow: '#3c372b',
+    noteBackground: '#fcffb0',
+    creationNoteBackground: '#b0c4de',
+    background: '#b0c4de',
+  },
+  fontSize: {
+    header: '3rem',
+  },
+};
 
-  header {
-    height: 10vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(100, 100, 100);
-    position: relative;
-    z-index: 2;
-
-    h1 {
-      font-size: 3rem;
-      color: white;
-    }
+export const GlobalStyle = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto';
+    box-sizing: border-box;
   }
 
-  main {
-    height: 90vh;
+  body {
+    background-color: ${theme.primaryColor.background}
+  }
+`;
+
+export const Header = styled.header`
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${theme.primaryColor.headerBackground};
+  z-index: 2;
+
+  h1 {
+    font-size: ${theme.fontSize.header};
+    color: ${theme.primaryColor.header};
+  }
+`;
+
+export const Main = styled.main`
+  height: 90vh;
+  padding: 4rem;
+`;
+
+export const Button = styled.button`
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  font-size: 1.5rem;
+  border: 1px solid ${theme.primaryColor.border};
+  border-radius: 0.1rem;
+  box-shadow: 1px 1px 2px ${theme.primaryColor.boxShadow};
+`;
+
+export const CreateButton = styled(Button)`
+  display: block;
+  margin: 0 auto 3rem auto;
+`;
+
+const enableNoteCreation = keyframes`
+  from {
+    top: 20%;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  to {
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
   }
 `;
 
 export const NoteCreationStyle = styled.div`
-  margin: 1rem auto;
-  padding: 0;
-  height: fit-content;
-  position: relative;
+  position: fixed;
+  left: 50%;
   z-index: 2;
   width: 80%;
-  background-color: rgb(200, 200, 200);
-  padding: 1rem;
+  background-color: ${theme.primaryColor.creationNoteBackground};
+  padding: 0.75rem;
   border-radius: 0.5rem;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+
+  ${(props) =>
+    props.creatingNote
+      ? css`
+          visibility: visible;
+          pointer-events: auto;
+          animation-name: ${enableNoteCreation};
+        `
+      : css`
+          visibility: hidden;
+          pointer-events: none;
+        `}
 
   textarea {
     resize: none;
+    padding: 0.25rem 0.5rem;
     width: 100%;
     height: 250px;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     font-size: 1.2rem;
-    background-color: rgb(255, 240, 240);
+    color: ${theme.primaryColor.text};
+    background-color: ${theme.primaryColor.noteBackground};
+    outline: none;
+    border-color: ${theme.primaryColor.border};
   }
 
   div {
     display: flex;
     justify-content: space-evenly;
-    width: 100%;
-  }
-
-  div > button {
-  }
-
-  > button {
-    display: block;
-    margin: auto;
   }
 `;
 
 export const NoteListStyle = styled.div`
   width: 100%;
-  padding: 2rem 2rem 0 2rem;
+  padding: 0 2rem;
 
   ul {
     display: flex;
@@ -77,26 +134,32 @@ export const NoteListStyle = styled.div`
   }
 `;
 
-export const BlockScreenStyle = styled.div`
-  background-color: rgba(0, 0, 0, 0.4);
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 1;
+const toggleBlockScreen = keyframes`
+  from{
+    background-color: rgba(0, 0, 0, 0);
+    left: 0%;
+  }to{
+    background-color: rgba(0, 0, 0, 0.4);
+    left: 0%;
+  }
 `;
 
-export const CustomButtonStyle = styled.button`
-  font-weight: bold;
-  padding: 0.25rem 0.5rem;
-  font-size: 1.5rem;
-  border: 1px solid rgb(50, 50, 50);
-  border-radius: 0.1rem;
+export const BlockScreenStyle = styled.div`
+  position: fixed;
+  top: 0;
+  left: 100%;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  animation-name: ${(props) => (props.creatingNote ? toggleBlockScreen : null)};
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
 `;
 
 export const NoteStyle = styled.li`
   margin: 0rem 2rem 2rem 2rem;
   position: relative;
+  box-shadow: 2px 2px 5px ${theme.primaryColor.boxShadow};
 
   div {
     display: flex;
@@ -113,6 +176,7 @@ export const NoteSettingsButton = styled.button`
   border-width: 0 2px 2px 2px;
   border-color: rgb(50, 50, 50);
   border-style: solid;
+  box-shadow: 2px 2px 5px ${theme.primaryColor.border};
 `;
 
 export const NoteEditButton = styled(NoteSettingsButton)`
@@ -129,7 +193,7 @@ export const NoteText = styled.p`
   word-wrap: break-word;
   white-space: pre-wrap;
   overflow: hidden;
-  background-color: rgb(255, 240, 240);
+  background-color: ${theme.primaryColor.noteBackground};
   min-width: 10rem;
   max-width: 15rem;
   min-height: 5rem;
