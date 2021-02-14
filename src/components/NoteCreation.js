@@ -61,8 +61,6 @@ export default function NoteCreation() {
   function editNoteHandler() {
     const newNotes = [...notes];
 
-    console.log(currentNote.index);
-
     newNotes[currentNote.index].text = currentNote.text;
     newNotes[currentNote.index].settings = false;
     newNotes[currentNote.index].editting = false;
@@ -98,7 +96,10 @@ export default function NoteCreation() {
     <>
       {creatingNote ? (
         <NoteCreationStyle creatingNote={creatingNote}>
-          <textarea value={currentNote.text} onChange={textChangeHandler} />
+          <div>
+            {currentNote.text}
+            <textarea value={currentNote.text} onChange={textChangeHandler} />
+          </div>
           <div>
             {saveButton ? (
               <Button onClick={saveNoteHandler}>Save Note</Button>

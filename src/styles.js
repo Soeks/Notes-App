@@ -49,6 +49,10 @@ export const Header = styled.header`
 export const Main = styled.main`
   height: 90vh;
   padding: 4rem;
+
+  @media (max-width: 700px) {
+    padding: 2rem 0;
+  }
 `;
 
 export const Button = styled.button`
@@ -63,6 +67,10 @@ export const Button = styled.button`
 export const CreateButton = styled(Button)`
   display: block;
   margin: 0 auto 3rem auto;
+
+  @media (max-width: 700px) {
+    margin: 0 auto 2rem auto;
+  }
 `;
 
 const enableNoteCreation = keyframes`
@@ -80,7 +88,7 @@ export const NoteCreationStyle = styled.div`
   position: fixed;
   left: 50%;
   z-index: 2;
-  width: 80%;
+  width: fit-content;
   background-color: ${theme.primaryColor.creationNoteBackground};
   padding: 0.75rem;
   border-radius: 0.5rem;
@@ -99,20 +107,38 @@ export const NoteCreationStyle = styled.div`
           pointer-events: none;
         `}
 
-  textarea {
-    resize: none;
-    padding: 0.2rem 0.4rem;
-    width: 100%;
-    height: 250px;
-    margin-bottom: 0.5rem;
+  div:nth-child(1) {
+    word-wrap: break-word;
+    width: fit-content;
+    min-width: 20rem;
+    min-height: 10rem;
+    max-width: 80vw;
+    max-height: 60vh;
+    background-color: red;
+    overflow: hidden;
+    position: relative;
+    padding: 0.3rem 0.5rem;
     font-size: ${theme.fontSize.note};
-    color: ${theme.primaryColor.text};
-    background-color: ${theme.primaryColor.noteBackground};
-    outline: none;
-    border-color: ${theme.primaryColor.border};
+    visibility: none;
+    margin-bottom: 0.5rem;
+
+    textarea {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      resize: none;
+      padding: 0.2rem 0.4rem;
+      font-size: ${theme.fontSize.note};
+      color: ${theme.primaryColor.text};
+      background-color: ${theme.primaryColor.noteBackground};
+      outline: none;
+      border-color: ${theme.primaryColor.border};
+    }
   }
 
-  div {
+  div:nth-child(2) {
     display: flex;
     justify-content: space-evenly;
   }
@@ -132,6 +158,11 @@ export const NoteListStyle = styled.div`
       position: relative;
       box-shadow: 2px 2px 5px ${theme.primaryColor.boxShadow};
       align-self: center;
+      user-select: none;
+
+      @media (max-width: 700px) {
+        margin: 0rem 1rem 2rem 1rem;
+      }
 
       div {
         display: flex;
@@ -160,6 +191,13 @@ export const NoteText = styled.p`
   min-height: 5rem;
   max-height: 15rem;
   font-size: ${theme.fontSize.note};
+
+  @media (max-width: 700px) {
+    min-width: 5rem;
+    max-width: 10rem;
+    min-height: 5rem;
+    max-height: 10rem;
+  }
 `;
 
 export const NoteTextSelected = styled(NoteText)`
