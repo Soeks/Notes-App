@@ -13,6 +13,9 @@ const theme = {
   },
   fontSize: {
     header: '3rem',
+    noNotes: '2.5rem',
+    note: '1.2rem',
+    button: '1rem',
   },
 };
 
@@ -98,11 +101,11 @@ export const NoteCreationStyle = styled.div`
 
   textarea {
     resize: none;
-    padding: 0.25rem 0.5rem;
+    padding: 0.2rem 0.4rem;
     width: 100%;
     height: 250px;
     margin-bottom: 0.5rem;
-    font-size: 1.2rem;
+    font-size: ${theme.fontSize.note};
     color: ${theme.primaryColor.text};
     background-color: ${theme.primaryColor.noteBackground};
     outline: none;
@@ -116,22 +119,71 @@ export const NoteCreationStyle = styled.div`
 `;
 
 export const NoteListStyle = styled.div`
-  width: 100%;
   padding: 0 2rem;
 
   ul {
     display: flex;
     flex-wrap: wrap;
-    overflow: auto;
     justify-content: center;
     list-style-type: none;
+
+    li {
+      margin: 0rem 2rem 3rem 2rem;
+      position: relative;
+      box-shadow: 2px 2px 5px ${theme.primaryColor.boxShadow};
+      align-self: center;
+
+      div {
+        display: flex;
+        width: 100%;
+        position: absolute;
+        bottom: calc(-height);
+      }
+    }
   }
 
   > p {
-    font-size: 2.5rem;
+    font-size: ${theme.fontSize.noNotes};
     text-align: center;
     margin-bottom: 2rem;
   }
+`;
+
+export const NoteText = styled.p`
+  border: 1px dashed ${theme.primaryColor.border};
+  padding: 0.1rem 0.2rem;
+  word-wrap: break-word;
+  overflow: hidden;
+  background-color: ${theme.primaryColor.noteBackground};
+  min-width: 10rem;
+  max-width: 15rem;
+  min-height: 5rem;
+  max-height: 15rem;
+  font-size: ${theme.fontSize.note};
+`;
+
+export const NoteTextSelected = styled(NoteText)`
+  border-width: 2px;
+  border-style: solid;
+`;
+
+export const NoteSettingsButton = styled.button`
+  flex: 1;
+  font-size: ${theme.fontSize.button};
+  font-weight: bold;
+  border-width: 0 2px 2px 2px;
+  border-color: ${theme.primaryColor.border};
+  border-style: solid;
+  box-shadow: 2px 2px 5px ${theme.primaryColor.border};
+`;
+
+export const NoteEditButton = styled(NoteSettingsButton)`
+  background-color: #ffff97;
+`;
+
+export const NoteDeleteButton = styled(NoteSettingsButton)`
+  background-color: #ff7b7b;
+  border-width: 0 2px 2px 0;
 `;
 
 const toggleBlockScreen = keyframes`
@@ -154,53 +206,4 @@ export const BlockScreenStyle = styled.div`
   animation-name: ${(props) => (props.creatingNote ? toggleBlockScreen : null)};
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
-`;
-
-export const NoteStyle = styled.li`
-  margin: 0rem 2rem 2rem 2rem;
-  position: relative;
-  box-shadow: 2px 2px 5px ${theme.primaryColor.boxShadow};
-
-  div {
-    display: flex;
-    width: 100%;
-    position: absolute;
-    bottom: calc(-height);
-  }
-`;
-
-export const NoteSettingsButton = styled.button`
-  flex: 1;
-  font-size: 1rem;
-  font-weight: bold;
-  border-width: 0 2px 2px 2px;
-  border-color: rgb(50, 50, 50);
-  border-style: solid;
-  box-shadow: 2px 2px 5px ${theme.primaryColor.border};
-`;
-
-export const NoteEditButton = styled(NoteSettingsButton)`
-  background-color: #ffff97;
-`;
-
-export const NoteDeleteButton = styled(NoteSettingsButton)`
-  background-color: #ff7b7b;
-  border-width: 0 2px 2px 0;
-`;
-
-export const NoteText = styled.p`
-  border: 1px dashed rgb(150, 150, 150);
-  word-wrap: break-word;
-  white-space: pre-wrap;
-  overflow: hidden;
-  background-color: ${theme.primaryColor.noteBackground};
-  min-width: 10rem;
-  max-width: 15rem;
-  min-height: 5rem;
-  max-height: 14.4rem;
-  font-size: 1.2rem;
-`;
-
-export const NoteTextSelected = styled(NoteText)`
-  border: 2px solid rgb(50, 50, 50);
 `;

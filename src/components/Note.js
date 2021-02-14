@@ -3,7 +3,6 @@ import React, { useContext } from 'react';
 import { NotesContext } from '../providers/NotesProvider';
 
 import {
-  NoteStyle,
   NoteText,
   NoteTextSelected,
   NoteEditButton,
@@ -11,7 +10,7 @@ import {
 } from '../styles';
 
 export default function Note({ index }) {
-  const { notes, setNotes } = useContext(NotesContext);
+  const { notes, setNotes, setCreatingNote } = useContext(NotesContext);
 
   function noteSettingsHandler(index) {
     const newNotes = [...notes];
@@ -41,10 +40,12 @@ export default function Note({ index }) {
     }
 
     setNotes(newNotes);
+    noteSettingsHandler(index);
+    setCreatingNote(true);
   }
 
   return (
-    <NoteStyle>
+    <li>
       {notes[index].settings ? (
         <>
           <NoteTextSelected onClick={() => noteSettingsHandler(index)}>
@@ -64,6 +65,6 @@ export default function Note({ index }) {
           {notes[index].text}
         </NoteText>
       )}
-    </NoteStyle>
+    </li>
   );
 }

@@ -66,6 +66,7 @@ export default function NoteCreation() {
       setNotes(newNotes);
     }
 
+    setCurrentNote({ text: '', index: null });
     setCreatingNote(false);
   }
 
