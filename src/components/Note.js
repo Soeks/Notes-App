@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useLayoutEffect } from 'react';
 
 import { NotesContext } from '../providers/NotesProvider';
 
@@ -11,6 +11,29 @@ import {
 
 export default function Note({ index }) {
   const { notes, setNotes, setCreatingNote } = useContext(NotesContext);
+
+  const noteElement = useRef(null);
+
+  useLayoutEffect(TextEllipsis, [notes]);
+
+  function TextEllipsis() {
+    const note = noteElement.current.children[0];
+
+    if (note.scrollHeight <= note.offsetHeight) return;
+
+    let count = 0;
+    while (note.scrollHeight > note.offsetHeight) {
+      note.innerHTML = note.innerHTML.replace(/.$/s, '');
+      count++;
+
+      if (count > 1000) {
+        console.log('BROKE');
+        break;
+      }
+    }
+
+    note.innerHTML = note.innerHTML.replace(/.{3}$/, '...');
+  }
 
   function noteSettingsHandler(index) {
     const newNotes = [...notes];
@@ -45,7 +68,7 @@ export default function Note({ index }) {
   }
 
   return (
-    <li>
+    <li ref={noteElement}>
       {notes[index].settings ? (
         <>
           <NoteTextSelected onClick={() => noteSettingsHandler(index)}>

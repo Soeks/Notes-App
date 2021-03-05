@@ -159,6 +159,8 @@ export const NoteListStyle = styled.div`
       box-shadow: 2px 2px 5px ${theme.primaryColor.boxShadow};
       align-self: center;
       user-select: none;
+      width: 200px;
+      height: 100px;
 
       @media (max-width: 700px) {
         margin: 0rem 1rem 2rem 1rem;
@@ -182,22 +184,14 @@ export const NoteListStyle = styled.div`
 
 export const NoteText = styled.p`
   border: 1px solid ${theme.primaryColor.border};
-  padding: 0.1rem 0.2rem;
-  word-wrap: break-word;
-  overflow: hidden;
+  padding: 0.2rem 0.4rem;
   background-color: ${theme.primaryColor.noteBackground};
-  min-width: 10rem;
-  max-width: 15rem;
-  min-height: 5rem;
-  max-height: 15rem;
   font-size: ${theme.fontSize.note};
-
-  @media (max-width: 700px) {
-    min-width: 5rem;
-    max-width: 10rem;
-    min-height: 5rem;
-    max-height: 10rem;
-  }
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
 `;
 
 export const NoteTextSelected = styled(NoteText)`
